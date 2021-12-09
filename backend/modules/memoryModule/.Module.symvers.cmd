@@ -1,0 +1,1 @@
+cmd_/home/byly23/Escritorio/Sopes1/Proyecto1/backend/modules/memoryModule/Module.symvers := sed 's/ko$$/o/' /home/byly23/Escritorio/Sopes1/Proyecto1/backend/modules/memoryModule/modules.order | scripts/mod/modpost -m -a   -o /home/byly23/Escritorio/Sopes1/Proyecto1/backend/modules/memoryModule/Module.symvers -e -i Module.symvers   -T -
