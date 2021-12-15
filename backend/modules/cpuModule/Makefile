@@ -1,4 +1,4 @@
-obj-m += cpuModule.o
+obj-m += cpu_201700733.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules

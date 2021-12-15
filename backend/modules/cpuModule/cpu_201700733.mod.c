@@ -27,13 +27,11 @@ static const struct modversion_info ____versions[]
 __used __section("__versions") = {
 	{ 0xeeab4c1e, "module_layout" },
 	{ 0xa3080447, "seq_read" },
-	{ 0x9aa77d0a, "proc_remove" },
+	{ 0x240be803, "remove_proc_entry" },
 	{ 0xfe5d9eb7, "proc_create" },
 	{ 0xc5850110, "printk" },
-	{ 0xc959d152, "__stack_chk_fail" },
 	{ 0xb32a092d, "seq_printf" },
-	{ 0x1c338147, "vm_numa_stat" },
-	{ 0x40c7247c, "si_meminfo" },
+	{ 0x6d289335, "init_task" },
 	{ 0x72db9365, "single_open" },
 	{ 0xbdfb6dbb, "__fentry__" },
 };
@@ -41,4 +39,4 @@ __used __section("__versions") = {
 MODULE_INFO(depends, "");
 
 
-MODULE_INFO(srcversion, "F31F4ED9ECE09CB1A2EAF63");
+MODULE_INFO(srcversion, "10D1F9939504AD809F09CB0");
