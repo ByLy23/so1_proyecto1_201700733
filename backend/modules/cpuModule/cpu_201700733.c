@@ -23,25 +23,28 @@ static int memo_info_proc_show(struct seq_file *file, void *v) {
     #define TASK_ZOMBIE             4
     #define TASK_STOPPED            8
 
-    seq_printf(file,"\t'TASK RUNNING': %d,\n",TASK_RUNNING);
     for_each_process(process) {
         if(process->mm) {
             totMemo= get_mm_rss(process->mm);
         }
         seq_printf(file, "{\n");
-        seq_printf(file,"\t'Memoria': %lu,\n",totMemo/1024);
-        seq_printf(file,"\t'Proceso': %s,\n",process->comm);
-        seq_printf(file,"\t'Usuario': %d,\n",process->real_cred->uid);
-        seq_printf(file,"\t'PID': %d,\n",process->pid);
-        seq_printf(file,"\t'Childs': [\n");
+        seq_printf(file,"\t\"Memoria\": \"%lu\",\n",totMemo/1024);
+        seq_printf(file,"\t\"Proceso\": \"%s\",\n",process->comm);
+        seq_printf(file,"\t\"Usuario\": %d,\n",process->real_cred->uid);
+        seq_printf(file,"\t\"PID\": %d,\n",process->pid);
+        seq_printf(file,"\t\"Childs\": [\n");
         list_for_each(hijos, &(process->children)) {
             child_process= list_entry(hijos, struct task_struct, sibling);
             seq_printf(file, "\t{\n");
-            seq_printf(file,"\t\t'ProcesoHijo': %s,\n",child_process->comm);
-            seq_printf(file,"\t\t'PIDhijo': %d,\n",child_process->pid);
-            seq_printf(file, "\t}\n");
+            seq_printf(file,"\t\t\"ProcesoHijo\": \"%s\",\n",child_process->comm);
+            seq_printf(file,"\t\t\"PIDhijo\": %d\n",child_process->pid);
+            seq_printf(file, "\t},\n");
         }
         seq_printf(file,"\t]\n");
+        seq_printf(file,"\t\"ejecucion\": %d,\n",TASK_RUNNING);
+        seq_printf(file,"\t\"suspendidos\": %d,\n",TASK_INTERRUPTIBLE);
+        seq_printf(file,"\t\"zombie\": %d,\n",TASK_ZOMBIE);
+        seq_printf(file,"\t\"detenidos\": %d,\n",TASK_STOPPED);
         seq_printf(file, "},\n");
     }
     return 0;
