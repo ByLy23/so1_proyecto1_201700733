@@ -1,22 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { getCpu } from './getCpu';
 import { getKill } from './getKill';
 import { getRam } from './getRam';
 
 function App() {
   const [state, setstate] = useState(0);
   const [ram, setram] = useState({});
+  const [cpu, setcpu] = useState([]);
   const killProcess = () => {
     getKill(state).then(console.log('exito'));
   };
-  const handleUpdateRam = () => {
+  useEffect(() => {
     setTimeout(() => {
       getRam().then((data) => {
         setram(data);
-        console.log(ram);
       });
-    }, 3000);
+    }, 500);
+  });
+  const handleUpdate = () => {
+    getCpu().then((data) => {
+      setcpu(data);
+    });
   };
+
   return (
     <div className="App">
       <div className="nav">
@@ -32,12 +39,53 @@ function App() {
           </button>
         </span>
       </div>
-      <div className="cpuModule"></div>
-      <div className="ramModule">
-        <button className="btn btn-primary" onClick={handleUpdateRam}>
-          Actualizar Modulo Ram
+      <div className="cpuModule">
+        <button className="btn btn-primary" onClick={handleUpdate}>
+          UpdateCpu
         </button>
-        <span></span>
+        {cpu.map((element) => {
+          return (
+            <div>
+              <p>
+                <b>Memoria:</b> {element.Memoria}
+              </p>
+              <p>
+                <b>Proceso:</b> {element.Proceso}
+              </p>
+              <p>
+                <b>Usuario:</b> {element.Usuario}
+              </p>
+              <p>
+                <b>PID:</b> {element.PID}
+              </p>
+              <div>
+                {element.Childs.map((e) => {
+                  return (
+                    <div>
+                      <p>
+                        <b>Proceso Hijo: </b>
+                        {e.ProcesoHijo}
+                      </p>
+                      <p>
+                        <b>PDI Hijo: </b>
+                        {e.PIDhijo}
+                      </p>
+                    </div>
+                  );
+                })}
+                <hr />
+              </div>
+            </div>
+          );
+        })}
+        {/* <p>Total Ram: {ram.ram}</p>
+        <p>Uso: {ram.used}</p>
+        <p>Porcentaje: {ram.avg}%</p> */}
+      </div>
+      <div className="ramModule">
+        <p>Total Ram: {ram.ram}</p>
+        <p>Uso: {ram.used}</p>
+        <p>Porcentaje: {ram.avg}%</p>
       </div>
     </div>
   );

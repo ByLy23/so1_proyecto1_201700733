@@ -6,7 +6,6 @@ import(
 	"net/http"
 	"io/ioutil"
 	"os/exec"
-	"encoding/json"
 )
 
 func endpountFunc(w http.ResponseWriter, r *http.Request) {
@@ -19,13 +18,11 @@ func leerArchivo(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err);
 	}
 	output := string(out[:]);
-	var dataStruct struct {
-		ram int
-		used int
-		avg int
-	}
-	json.Unmarshal([]byte(output),&dataStruct)
-	w.Write(dataStruct)
+	w.Header().Set("Access-Control-Allow-Origin","*");
+	w.Header().Set("Access-Control-Allow-Methods","POST,GET,OPTIONS,PUT,DELETE");
+	w.Header().Set("Access-Control-Allow-Headers","Content-Type");
+	
+	fmt.Fprintf(w, output);
 }
 func leerCPU(w http.ResponseWriter, r *http.Request) {
 	go fmt.Println("Request al endpoint de inicio.de CPU..");
@@ -34,6 +31,9 @@ func leerCPU(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err);
 	}
 	output := string(out[:]);
+	w.Header().Set("Access-Control-Allow-Origin","*");
+	w.Header().Set("Access-Control-Allow-Methods","POST,GET,OPTIONS,PUT,DELETE");
+	w.Header().Set("Access-Control-Allow-Headers","Content-Type");
 	fmt.Fprintf(w, output);
 }
 func matarProceso(w http.ResponseWriter, r *http.Request) {
@@ -49,6 +49,9 @@ func matarProceso(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err);
 	}
 	output := string(out[:]);
+	w.Header().Set("Access-Control-Allow-Origin","*");
+	w.Header().Set("Access-Control-Allow-Methods","POST,GET,OPTIONS,PUT,DELETE");
+	w.Header().Set("Access-Control-Allow-Headers","Content-Type");
 	fmt.Fprintf(w, output);
 }
 //getent passwd var | cut -d: -f1
