@@ -16,7 +16,7 @@ function App() {
       getRam().then((data) => {
         setram(data);
       });
-    }, 500);
+    }, 3000);
   });
   const handleUpdate = () => {
     getCpu().then((data) => {
